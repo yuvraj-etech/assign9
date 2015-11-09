@@ -17,7 +17,7 @@ if ($num_rows == 1) {
 } 
 else {
 
-    $sql = "INSERT INTO assign6_user (name, email, password) VALUES ('$name', '$email', '$password')";
+    $sql = "INSERT INTO assign9_user (name, email, password) VALUES ('$name', '$email', '$password')";
 
     if (mysqli_query($conn, $sql)) {
         echo "Successfully Registered";

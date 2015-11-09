@@ -2,7 +2,7 @@
 require 'conn.php';
 
 $email = $_POST['email'];
-$sql = "SELECT name, email FROM assign9_user WHERE email = '$email'";
+$sql = "SELECT id, name, email FROM assign9_user WHERE email = '$email'";
 $result = mysqli_query($conn, $sql);
 
 
