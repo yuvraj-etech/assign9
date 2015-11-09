@@ -1,0 +1,32 @@
+
+
+body {
+    background: #eee;	
+}
+
+.wrapper {	
+    margin-top: 80px;
+    margin-bottom: 80px;
+}
+.wrapper1 {	
+    margin: 0 auto;
+    max-width: 40%;
+    padding-top: 5%;
+}
+
+.form-signin {
+    max-width: 380px;
+    padding: 15px 35px 45px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+.form-signin-heading{
+    padding-bottom:  10px;
+}
+.form-control {
+    height: auto;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

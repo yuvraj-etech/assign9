@@ -1,0 +1,6 @@
+$(document).ready(function() {
+                $("#date").datepicker();
+                $("#date").click(function(){
+                    alert('hi');
+                })
+            });

@@ -1,0 +1,44 @@
+<div class="wrapper1">
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h5>Registration From</h5></div>
+        <div class="panel-body">
+            <form class="form-horizontal" name="registration_form" novalidate>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" ng-model="name" name="name" placeholder="Please Enter Your Name" ng-pattern="/^[a-zA-Z0-9]{4,10}$/" class="form-control" required>
+                        <span style="color:red" ng-show="registration_form.name.$error.pattern">
+                            Name (min 4 words max 10 words)
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Email</label>
+                    <div class="col-sm-9">
+                        <input type="email" ng-model="email" ng-pattern="/^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i" name="email" placeholder="Please Enter Your Email" class="form-control" required>
+                        <span style="color:red" ng-show="registration_form.email.$error.pattern">
+                            Enter a valid email
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" ng-model="password" name="password" placeholder="Please Enter Your Password" ng-minlength="6" required=""/>
+                        <span style="color:red" ng-show="registration_form.password.$error.minlength">
+                            Password Should be min 6 character
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Confirm Password</label>
+                    <div class="col-sm-9">
+                        <input type="password" class="form-control" ng-model="c_password" name="c_password" placeholder="Please Enter Your Password" password-verify="password"/>
+                        <span style="color:red" ng-show="registration_form.c_password.$error.passwordVerify">Password Not Match</span>
+                    </div>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" id="submit" href="#/" ng-click="register()" type="submit" ng-disabled="registration_form.$invalid || registration_form.email.$error.pattern || registration_form.name.$error.pattern || registration_form.password.$error.pattern || registration_form.c_password.$error.passwordVerify || registration_form.c_password.$pristine">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

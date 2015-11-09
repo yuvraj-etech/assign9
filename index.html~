@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html ng-app="multipage">
+    <head>
+        <meta charset="utf-8" />
+        <title>Assignment 6 angularjs</title>
+        <link rel="stylesheet" href="lib/bootstrap.min.css" />    
+        <link rel="stylesheet" href="lib/style.css" />
+        <script src="lib/jquery.min.js"></script>
+        <script src="lib/bootstrap.min.js"></script>
+        <script src="lib/angularjs.js"></script>
+        <script src="lib/angular-ui-router.min.js"></script>
+        <!--<script src="lib/angular-local-storage.min.js"></script>-->
+        <script src="lib/ngStorage.min.js"></script>
+        
+        <link rel="stylesheet" href="components/angular-datepicker.css" />
+        <script src="components/angular-datepicker.js"></script>
+      
+        <script src="app.js"></script>
+       
+        <script src="js/controller.js"></script>
+        <script src="login/login_form_controller.js"></script>
+        <script src="registration/registration_form_controller.js"></script>
+        <script src="dashboard/dashboard_controller.js"></script>
+        <script src="newTask/newTask_controller.js"></script>
+        <script src="services/services.js"></script>
+    </head>
+    <body>
+
+        <div class="navbar-wrapper">
+
+            <nav class="navbar navbar-inverse  navbar-fixed-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Etech</a>
+                    </div>
+                    <div id="navbar" class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="">Home</a></li>
+                            <li><a href="">About</a></li>
+                            <li><a href="">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+
+        <!-- Carousel
+        ================================================== -->
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                <li class="" data-target="#myCarousel" data-slide-to="1"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                    <img class="first-slide" src="images/carousel1.jpg">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>Grow with Technology</h1>
+                            <p>Technology with you. Technology with you. Technology with you. Technology with you. Technology with you. Technology with you. Technology with you. </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item left">
+                    <img class="second-slide" src="images/carousel2.jpg">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>Atom's Codes</h1>
+                            <p>All the things are made up with codes. All the things are made up with codes. All the things are made up with codes. All the things are made up with codes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div><!-- /.carousel -->
+
+
+
+
+
+
+
+
+
+        <div ui-view></div>
+
+    </body>
+</html>
