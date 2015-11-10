@@ -25,7 +25,7 @@ angular.module('userTaskModule', ['ui.router', 'userTaskModuleController'])
             })
             .state('/allTask', {
                 url: "/allTask",
-                templateUrl: "partials/allTask.html",
+                templateUrl: "allTask/allTask.html",
                 controller: "allTask"
             });
 })
@@ -67,6 +67,14 @@ angular.module('userTaskModule', ['ui.router', 'userTaskModuleController'])
     return {
         restrict: 'A',
         templateUrl: 'common/menu.html',
+        link: function(scope, element, attrs) {}
+        }
+    })
+    
+.directive('userMenu', function($document) {
+    return {
+        restrict: 'A',
+        templateUrl: 'common/userMenu.html',
         link: function(scope, element, attrs) {}
         }
     });
