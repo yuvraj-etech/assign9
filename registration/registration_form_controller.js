@@ -1,13 +1,7 @@
 
-userTaskModuleController.controller('registration_form', function($scope, $location, $location, $http, mylocalService) {
+userTaskModuleController.controller('registration_form', function($scope, $location, $location, $http, ajaxRequest) {
     $scope.register = function() {
-        $http({
-            method: 'POST',
-            url: 'registration.php',
-            headers: mylocalService.getHeader(),
-            transformRequest: mylocalService.rawPhp(),
-            data: {name: $scope.name, email: $scope.email, password: $scope.password}
-        }).success(function(response) {
+        ajaxRequest.send('registration.php', {name: $scope.name, email: $scope.email, password: $scope.password}, 'POST').then(function(response) {
             alert(response);
             if (response == 'User Email already register') {
                 $location.path('registration');
@@ -18,6 +12,8 @@ userTaskModuleController.controller('registration_form', function($scope, $locat
                 $scope.c_password = "";
                 $location.path('/');
             }
+        }, function(response) {
+            alert(response);
         });
 
     };

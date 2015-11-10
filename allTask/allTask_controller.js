@@ -1,25 +1,17 @@
-userTaskModuleController.controller('allTask', function($scope, $http, mylocalService, timeStorageService) {
+userTaskModuleController.controller('allTask', function($scope, $http, timeStorageService, ajaxRequest) {
     var userObject = timeStorageService.get();
     var email = userObject.email;
-    $http({
-        method: 'POST',
-        url: 'allTask.php',
-        headers: mylocalService.getHeader(),
-        transformRequest: mylocalService.rawPhp(),
-        data: {email: email}
-    }).success(function(response) {
+    ajaxRequest.send('allTask.php', {email: email}, 'POST').then(function(response) {
         $scope.data = response;
+    }, function(response) {
+        alert(response);
     });
 
     $scope.deleteTask = function(taskId) {
-        $http({
-            method: 'POST',
-            url: 'deleteTask.php',
-            headers: mylocalService.getHeader(),
-            transformRequest: mylocalService.rawPhp(),
-            data: {taskId: taskId, email: email}
-        }).success(function(response) {
+        ajaxRequest.send('deleteTask.php', {taskId: taskId, email: email}, 'POST').then(function(response) {
             $scope.data = response;
+        }, function(response) {
+            alert(response);
         });
     };
 
@@ -31,18 +23,14 @@ userTaskModuleController.controller('allTask', function($scope, $http, mylocalSe
             $scope.active = null;
         }
     };
-    
-    $scope.saveEditTask = function(data){
+
+    $scope.saveEditTask = function(data) {
         $scope.active = null;
-        $http({
-            method: 'POST',
-            url: 'updateTask.php',
-            headers: mylocalService.getHeader(),
-            transformRequest: mylocalService.rawPhp(),
-            data: {taskId: data.id, newTaskName: data.task_name, newDueDate: data.due_date}
-        }).success(function(response) {
-            
+        ajaxRequest.send('updateTask.php', {taskId: data.id, newTaskName: data.task_name, newDueDate: data.due_date, newTaskStatus: data.task_status}, 'POST').then(function(response) {
+        }, function(response) {
+            alert(response);
         });
-    } 
-    
+
+    }
+
 });

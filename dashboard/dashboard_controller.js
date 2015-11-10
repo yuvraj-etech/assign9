@@ -1,5 +1,5 @@
 
-userTaskModuleController.controller('dashboard', ['$scope', 'timeStorageService', '$http', 'mylocalService', '$location', function($scope, timeStorageService, $http, mylocalService, $location) {
+userTaskModuleController.controller('dashboard', ['$scope', 'timeStorageService', '$http', '$location', 'ajaxRequest', function($scope, timeStorageService, $http, $location, ajaxRequest) {
 
         var userObject = timeStorageService.get();
         if (userObject == null) {
@@ -7,14 +7,10 @@ userTaskModuleController.controller('dashboard', ['$scope', 'timeStorageService'
             $location.path('/');
         } else {
             var value = userObject.email;
-            $http({
-                method: 'POST',
-                url: 'user_data.php',
-                headers: mylocalService.getHeader(),
-                transformRequest: mylocalService.rawPhp(),
-                data: {email: value}
-            }).success(function(response) {
+            ajaxRequest.send('user_data.php', {email: value}, 'POST').then(function(response) {
                 $scope.data = response;
+            }, function(response) {
+                alert(response);
             });
         }
         var userTime = userObject.newTime;

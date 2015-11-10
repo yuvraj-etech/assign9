@@ -1,21 +1,5 @@
 angular.module('myServices', ['ngStorage'])
 
-.factory('mylocalService', function() {
-    var service = {};
-    service.getHeader = function() {
-        return {'Content-Type': 'application/x-www-form-urlencoded'};
-    };
-    service.rawPhp = function() {
-        return function(obj) {
-            var str = [];
-            for (var p in obj)
-                str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-            return str.join("&");
-        };
-    };
-    return service;
-})
-
 .factory('timeStorageService', function($window, $localStorage, $interval) {
     var service = {};
     service.get = function(a) {

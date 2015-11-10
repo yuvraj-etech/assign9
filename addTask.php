@@ -6,7 +6,7 @@ $dueDate = $_POST['dueDate'];
 $userEmail = $_POST['userEmail'];
 
 
-    $sql = "INSERT INTO assign9_task (task_name, due_date, userEmail) VALUES ('$taskName', '$dueDate', '$userEmail')";
+    $sql = "INSERT INTO assign9_task (task_name, due_date, userEmail, task_status) VALUES ('$taskName', '$dueDate', '$userEmail', 'No')";
 
     if (mysqli_query($conn, $sql)) {
         echo "Task Added";

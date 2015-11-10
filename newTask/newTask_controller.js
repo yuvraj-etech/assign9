@@ -1,21 +1,17 @@
-userTaskModuleController.controller('newTask', function($scope, $http, mylocalService, timeStorageService) {
-			var userObject = timeStorageService.get();
-        
-            var email = userObject.email;
-           
-        $scope.addTask = function (){
-            $http({
-            method: 'POST',
-            url: 'addTask.php',
-            headers: mylocalService.getHeader(),
-            transformRequest: mylocalService.rawPhp(),
-            data: {taskName: $scope.taskName, dueDate: $scope.dueDate, userEmail: email}
-        }).success(function(response) {
+userTaskModuleController.controller('newTask', function($scope, $http, timeStorageService, ajaxRequest) {
+    var userObject = timeStorageService.get();
+
+    var email = userObject.email;
+
+    $scope.addTask = function() {
+        ajaxRequest.send('addTask.php', {taskName: $scope.taskName, dueDate: $scope.dueDate, userEmail: email}, 'POST').then(function(response) {
             alert(response);
             $scope.taskName = "";
             $scope.dueDate = "";
+        }, function(response) {
+            alert(response);
         });
-        }
-        
-    });
+    }
+
+});
 

@@ -31,5 +31,10 @@ body {
 #left_menu{
     border:1px solid #47316B;
     border-radius: 10px;
-    
+}
+.red{
+    background-color: #FF5151;
+}
+.grey{
+    background-color: #d3d3d3;
 }

@@ -1,5 +1,5 @@
 
-userTaskModuleController.controller('login_form', ['$scope', '$http', '$location', 'mylocalService', 'timeStorageService', function($scope, $http, $location, mylocalService, timeStorageService) {
+userTaskModuleController.controller('login_form', ['$scope', '$http', '$location', 'timeStorageService', 'ajaxRequest', function($scope, $http, $location, timeStorageService, ajaxRequest) {
         var userObject = timeStorageService.get();
         if (userObject == null) {
             $location.path('/');
@@ -19,17 +19,11 @@ userTaskModuleController.controller('login_form', ['$scope', '$http', '$location
         }
 
         $scope.login = function() {
-            $http({
-                method: 'POST',
-                url: 'login.php',
-                headers: mylocalService.getHeader(),
-                transformRequest: mylocalService.rawPhp(),
-                data: {email: $scope.email, password: $scope.password}
-            }).success(function(response) {
+            ajaxRequest.send('login.php', {email: $scope.email, password: $scope.password}, 'POST').then(function(response) {
                 if (response == 'Login Successfully') {
                     var time;
                     if (!$scope.time) {
-                        time = 600000;
+                        time = 6000000;
                     } else {
                         time = $scope.time * 60000;
                     }
@@ -43,6 +37,8 @@ userTaskModuleController.controller('login_form', ['$scope', '$http', '$location
                     alert(response);
                     $location.path('/');
                 }
+            }, function(response) {
+                alert(response);
             });
         };
     }]);
