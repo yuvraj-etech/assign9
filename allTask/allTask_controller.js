@@ -22,4 +22,27 @@ userTaskModuleController.controller('allTask', function($scope, $http, mylocalSe
             $scope.data = response;
         });
     };
+
+    $scope.showEditRow = function(r) {
+        if ($scope.active != r) {
+            $scope.active = r;
+        }
+        else {
+            $scope.active = null;
+        }
+    };
+    
+    $scope.saveEditTask = function(data){
+        $scope.active = null;
+        $http({
+            method: 'POST',
+            url: 'updateTask.php',
+            headers: mylocalService.getHeader(),
+            transformRequest: mylocalService.rawPhp(),
+            data: {taskId: data.id, newTaskName: data.task_name, newDueDate: data.due_date}
+        }).success(function(response) {
+            
+        });
+    } 
+    
 });
