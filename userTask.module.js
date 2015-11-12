@@ -39,7 +39,7 @@
             .directive('leftMenu', function($document) {
                 return {
                     restrict: 'A',
-                    templateUrl: 'common/menu.html',
+                    templateUrl: 'common/leftMenu.html',
                     link: function(scope, element, attrs) {
                     }
                 }
