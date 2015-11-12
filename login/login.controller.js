@@ -1,6 +1,6 @@
 (function(){
 'use strict';
-userTaskModuleController.controller('login_form', ['$scope', '$http', '$location', 'timeStorageService', 'ajaxRequest', function($scope, $http, $location, timeStorageService, ajaxRequest) {
+userTaskModuleController.controller('login_form', ['$scope', '$http', '$location', 'timeStorageService', 'ajaxRequest', '$log', function($scope, $http, $location, timeStorageService, ajaxRequest, $log) {
         var userObject = timeStorageService.get();
         if (userObject == null) {
             $location.path('/');
@@ -35,11 +35,11 @@ userTaskModuleController.controller('login_form', ['$scope', '$http', '$location
                     var userValue = $scope.email;
                     timeStorageService.set(userKey, userValue, newTime);
                 } else {
-                    alert(response);
+                    $scope.error = response;
                     $location.path('/');
                 }
             }, function(response) {
-                alert(response);
+                $log.error(response);
             });
         };
     }]);
