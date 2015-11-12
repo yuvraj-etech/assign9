@@ -41,3 +41,6 @@ body {
 .error{
     color: red;
 }
+.navbar{
+    margin-bottom: 0px!important;
+}

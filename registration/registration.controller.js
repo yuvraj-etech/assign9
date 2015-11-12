@@ -6,6 +6,7 @@ userTaskModuleController.controller('registration_form', function($scope, $locat
         ajaxRequest.send('registration.php', {name: $scope.name, email: $scope.email, password: $scope.password}, 'POST').then(function(response) {
             $log.debug(response);
             if (response == 'User Email already register') {
+                $scope.error = 'User Email already register';
                 $location.path('registration');
             } else {
                 $scope.name = "";

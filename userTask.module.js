@@ -71,16 +71,6 @@
                     url: "/dashboard",
                     templateUrl: "dashboard/dashboard.html",
                     controller: "dashboard"
-                })
-                .state('/newTask', {
-                    url: "/newTask",
-                    templateUrl: "newTask/newTask.html",
-                    controller: "newTask"
-                })
-                .state('/allTask', {
-                    url: "/allTask",
-                    templateUrl: "allTask/allTask.html",
-                    controller: "allTask"
                 });
     }
 })();
