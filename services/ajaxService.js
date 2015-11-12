@@ -4,11 +4,12 @@
             .factory('ajaxRequest', ajax);
     function ajax($http, $q) {
         return {
+            
             send: function(api, data, method) {
-
+                var baseApi = 'server/';
                 var def = $q.defer();
                 $http({
-                    url: api,
+                    url: baseApi+api,
                     method: method,
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
                     transformRequest: function(obj) {

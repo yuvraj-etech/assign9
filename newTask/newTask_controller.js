@@ -1,3 +1,5 @@
+(function(){
+'use strict';
 userTaskModuleController.controller('newTask', function($scope, $http, timeStorageService, ajaxRequest) {
     var userObject = timeStorageService.get();
 
@@ -15,3 +17,4 @@ userTaskModuleController.controller('newTask', function($scope, $http, timeStora
 
 });
 
+})();

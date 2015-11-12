@@ -2,7 +2,7 @@
 require 'conn.php';
 
 $email = $_POST['email'];
-$sql = "SELECT id, task_name, due_date, task_status FROM assign9_task WHERE userEmail = '$email'";
+$sql = "SELECT id, task_name, due_date, task_status FROM assign9_task WHERE userEmail = '$email' ORDER BY id DESC";
 $result = mysqli_query($conn, $sql);
 
 

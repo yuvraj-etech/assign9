@@ -1,3 +1,6 @@
+(function(){
+'use strict';
+
 userTaskModuleController.controller('allTask', function($scope, $http, timeStorageService, ajaxRequest) {
     var userObject = timeStorageService.get();
     var email = userObject.email;
@@ -34,3 +37,4 @@ userTaskModuleController.controller('allTask', function($scope, $http, timeStora
     }
 
 });
+})();

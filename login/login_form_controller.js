@@ -1,4 +1,5 @@
-
+(function(){
+'use strict';
 userTaskModuleController.controller('login_form', ['$scope', '$http', '$location', 'timeStorageService', 'ajaxRequest', function($scope, $http, $location, timeStorageService, ajaxRequest) {
         var userObject = timeStorageService.get();
         if (userObject == null) {
@@ -23,7 +24,7 @@ userTaskModuleController.controller('login_form', ['$scope', '$http', '$location
                 if (response == 'Login Successfully') {
                     var time;
                     if (!$scope.time) {
-                        time = 6000000;
+                        time = 60000000;
                     } else {
                         time = $scope.time * 60000;
                     }
@@ -43,3 +44,4 @@ userTaskModuleController.controller('login_form', ['$scope', '$http', '$location
         };
     }]);
 
+})();

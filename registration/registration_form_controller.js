@@ -1,5 +1,7 @@
+(function(){
+'use strict';
 
-userTaskModuleController.controller('registration_form', function($scope, $location, $location, $http, ajaxRequest) {
+userTaskModuleController.controller('registration_form', function($scope, $location, $http, ajaxRequest) {
     $scope.register = function() {
         ajaxRequest.send('registration.php', {name: $scope.name, email: $scope.email, password: $scope.password}, 'POST').then(function(response) {
             alert(response);
@@ -18,3 +20,4 @@ userTaskModuleController.controller('registration_form', function($scope, $locat
 
     };
 });
+})();
