@@ -1,10 +1,10 @@
 (function() {
     'use strict';
-    userTaskModuleController.controller('dashboard', ['$scope', 'timeStorageService', '$http', '$location', 'ajaxRequest', '$log', function($scope, timeStorageService, $http, $location, ajaxRequest, $log) {
+    userTaskModuleController.controller('dashboard', ['$scope', 'timeStorageService', '$http', '$location', 'ajaxRequest', '$log', '$state', function($scope, timeStorageService, $http, $location, ajaxRequest, $log, $state) {
             var userObject = timeStorageService.get();
-            if (userObject === null) {
+            if (angular.isUndefined(userObject) || userObject == null) {
                 $log.warn('Please Login First');
-                $location.path('/');
+                $state.go('/');
             } else {
                 var email = userObject.email;
                 ajaxRequest.send('user_data.php', {email: email}, 'POST').then(function(response) {
@@ -24,7 +24,7 @@
             if (currentTime > userTime) {
                 timeStorageService.remove('userLocalStorage');
                 $log.warn('Please Login Again');
-                $location.path('/');
+                $state.go('/');
             }
 
             $scope.logout = function() {

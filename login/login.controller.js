@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    userTaskModuleController.controller('login_form', ['$scope', '$http', '$location', 'timeStorageService', 'ajaxRequest', '$log', 'loginService', function($scope, $http, $location, timeStorageService, ajaxRequest, $log, loginService) {
+    userTaskModuleController.controller('login_form', ['$scope', '$http', '$location', 'timeStorageService', 'ajaxRequest', '$log', 'loginService', '$state', function($scope, $http, $location, timeStorageService, ajaxRequest, $log, loginService, $state) {
             loginService.validUser();
 
             $scope.login = function() {
@@ -12,7 +12,7 @@
                         } else {
                             time = $scope.time * 60000;
                         }
-                        $location.path('dashboard');
+                        $state.go('/dashboard');
                         var currentTime = Date.now();
                         var newTime = currentTime + time;
                         var userKey = 'email';
@@ -20,7 +20,7 @@
                         timeStorageService.set(userKey, userValue, newTime);
                     } else {
                         $scope.error = response;
-                        $location.path('/');
+                        $state.go('/');
                     }
                 }, function(response) {
                     $log.error(response);
