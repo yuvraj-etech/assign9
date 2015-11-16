@@ -1,7 +1,9 @@
 (function() {
     'use strict';
+    angular.module('userTaskModule')
+            .controller('registration_form', registration_form);
 
-    userTaskModuleController.controller('registration_form', function($scope, $location, $http, ajaxRequest, $log, $state) {
+    function registration_form($scope, $location, $http, ajaxRequest, $log, $state) {
         $scope.register = function() {
             ajaxRequest.send('registration.php', {name: $scope.name, email: $scope.email, password: $scope.password}, 'POST').then(function(response) {
                 $log.debug(response);
@@ -20,5 +22,6 @@
             });
 
         };
-    });
+    }
+    ;
 })();
