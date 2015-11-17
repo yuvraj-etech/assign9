@@ -12,13 +12,7 @@
                     url: baseApi+api,
                     method: method,
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                    transformRequest: function(obj) {
-                        var str = [];
-                        for (var p in obj)
-                            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-                        return str.join("&");
-                    },
-                    data: data,
+                    data: $.param(data),
                 }).success(function(data) {
 
 

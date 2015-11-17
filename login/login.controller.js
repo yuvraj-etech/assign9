@@ -9,12 +9,7 @@
         $scope.login = function() {
             ajaxRequest.send('login.php', {email: $scope.email, password: $scope.password}, 'POST').then(function(response) {
                 if (response == 'Login Successfully') {
-                    var time;
-                    if (!$scope.time) {
-                        time = 60000000;
-                    } else {
-                        time = $scope.time * 60000;
-                    }
+                    var time = 604800000;
                     $state.go('/dashboard');
                     var currentTime = Date.now();
                     var newTime = currentTime + time;
