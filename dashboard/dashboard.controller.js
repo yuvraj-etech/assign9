@@ -3,7 +3,7 @@
     angular.module('userTaskModule')
             .controller('dashboard', dashboard);
 
-    function dashboard($scope, timeStorageService, $http, $location, ajaxRequest, $log, $state) {
+    function dashboard($scope, timeStorageService, ajaxRequest, $log, $state, deleteSelectedTask) {
         var userObject = timeStorageService.get();
         if (angular.isUndefined(userObject) || userObject == null) {
             $log.warn('Please Login First');
@@ -20,13 +20,6 @@
             }, function(response) {
                 $log.error(response);
             });
-        }
-        var userTime = userObject.newTime;
-        var currentTime = Date.now();
-        if (currentTime > userTime) {
-            timeStorageService.remove('userLocalStorage');
-            $log.warn('Please Login Again');
-            $state.go('/');
         }
 
         $scope.logout = function() {
@@ -70,6 +63,35 @@
                 $log.error(response);
             });
         }
+
+
+        $scope.selection = [];
+        $scope.selectedIds = function selectedIds(taskId) {
+            var idx = $scope.selection.indexOf(taskId);
+            if (idx > -1) {
+                $scope.selection.splice(idx, 1);
+            }
+            else {
+                $scope.selection.push(taskId);
+                $scope.deleteSelected = function() {
+                    var email = userObject.email;
+                    deleteSelectedTask.remove($scope.selection, email).then(function(response) {
+                        $scope.data = response;
+                         $scope.selection = [];
+                    }, function(response) {
+                        $log.error(response);
+                    });
+                }
+            }
+        };
+
+
+
+
+
+
+
+
     }
     ;
 })();

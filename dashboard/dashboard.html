@@ -42,26 +42,39 @@
                         <div class="panel panel-primary">
                             <div class="panel-heading">All Tasks</div>
                             <div class="panel-body">
-
-                                <table class="table table-bordered">
+                                <button ng-click="deleteSelected()" class="btn btn-primary">Delete Selected</button>
+                                <table class="table table-bordered" ng-keydown="$event.which === 27 && showEditRow(x)">
+                                    <colgroup>
+                                        <col width="10%">
+                                        <col width="10%">
+                                        <col width="30%">
+                                        <col width="30%">
+                                        <col width="10%">
+                                        <col width="10%">
+                                    </colgroup>
                                     <input type="text" ng-model="searchTask" name="name" placeholder="Search for a task" class="form-control" autocomplete="off">
-                                    <tr class="success"><th>Task Status</th><th>Task Name</th><th>Due Date</th><th>Edit Task</th><th>Delete Task</th></tr>
+                                    <tr class="success"><th>Select</th><th>Task Status</th><th>Task Name</th><th>Due Date</th><th>Edit Task</th><th>Delete Task</th></tr>
                                     <tr ng-repeat="x in data| filter:searchTask track by $index " ng-class="(x.task_status == 'No') ? 'red' : 'grey'">
                                         <td>
-                                            <input type="checkbox" ng-model="x.task_status"
-                                                   ng-true-value="'Yes'" ng-false-value="'No'" ng-change="saveEditTask(x)">
+                                            <input type="checkbox" ng-checked="selection.indexOf(x.id) > - 1" ng-click="selectedIds(x.id)" /> 
                                         </td>
-                                        <td><span ng-hide="active == x" ng-click="showEditRow(x)">{{x.task_name}}</span><input class="form-control input-sm" ng-show="active == x" ng-model="x.task_name"></td>
-                                        <td><span ng-hide="active == x" ng-click="showEditRow(x)">{{x.due_date}}</span>
+                                        <td>
+                                            <input type="checkbox" ng-model="x.task_status" ng-true-value="'Yes'" ng-false-value="'No'" ng-change="saveEditTask(x)">
+                                        </td>
+                                        <td>
+                                            <span ng-hide="active == x" ng-click="showEditRow(x)">{{x.task_name}}</span>
+                                            <input class="form-control input-sm" ng-show="active == x" ng-model="x.task_name" ng-keydown="$event.which === 13 && saveEditTask(x)">
+                                        </td>
+                                        <td>
+                                            <span ng-hide="active == x" ng-click="showEditRow(x)">{{x.due_date}}</span>
                                     <datepicker date-format="yyyy-MM-dd" date-min-limit="2015-11-11">
-                                        <input class="form-control input-sm" ng-show="active == x" ng-model="x.due_date">
+                                        <input class="form-control input-sm" ng-show="active == x" ng-model="x.due_date" ng-keydown="$event.which === 13 && saveEditTask(x)">
                                     </datepicker>
                                     </td>
                                     <td><a href="" ng-click="showEditRow(x)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</a>
                                         <br/><a href="" ng-click="saveEditTask(x)" ng-show="active == x"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Save</a></td>
                                     <td><a href="" ng-click="deleteTask(x.id)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</a></td>
                                     </tr>
-
                                 </table>
                             </div>
                         </div>
@@ -84,7 +97,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Task Name</label>
                         <div class="col-sm-9">
-                            <input type="text" ng-model="taskName" name="name" placeholder="Please Enter Task Name" class="form-control" required>
+                            <input type="text" ng-model="taskName" name="name" placeholder="Please Enter Task Name" class="form-control" required autofocus>
                         </div>
                     </div>
                     <div class="form-group">

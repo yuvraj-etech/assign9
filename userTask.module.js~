@@ -43,15 +43,6 @@
                     link: function(scope, element, attrs) {
                     }
                 }
-            })
-
-            .directive('userMenu', function($document) {
-                return {
-                    restrict: 'A',
-                    templateUrl: 'common/userMenu.html',
-                    link: function(scope, element, attrs) {
-                    }
-                }
             });
 
     function config($stateProvider, $urlRouterProvider) {
