@@ -36,14 +36,17 @@
         $scope.showEditRow = function(r) {
             if ($scope.active != r) {
                 $scope.active = r;
+                $scope.isFocused = true;
             }
             else {
                 $scope.active = null;
+                $scope.isFocused = false;
             }
         };
         $scope.saveEditTask = function(data) {
             $scope.active = null;
             ajaxRequest.send('updateTask.php', {taskId: data.id, newTaskName: data.task_name, newDueDate: data.due_date, newTaskStatus: data.task_status}, 'POST').then(function(response) {
+                $scope.isFocused = false;
             }, function(response) {
                 $log.error(response);
             });
@@ -77,16 +80,13 @@
                     var email = userObject.email;
                     deleteSelectedTask.remove($scope.selection, email).then(function(response) {
                         $scope.data = response;
-                         $scope.selection = [];
+                        $scope.selection = [];
                     }, function(response) {
                         $log.error(response);
                     });
                 }
             }
         };
-
-
-
 
 
 
