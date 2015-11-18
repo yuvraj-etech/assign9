@@ -3,6 +3,17 @@
 
     angular.module('userTaskModule')
             .config(config)
+            .run(function($rootScope, $location, timeStorageService) {
+                $rootScope.$on('$stateChangeStart', function(event, toState, toParams) {
+                    var userObject = timeStorageService.get();
+                    if (angular.isUndefined(userObject) || userObject == null) {
+//                        $rootScope.returnToState = toState.url;
+//                        $rootScope.returnToStateParams = toParams.Id;
+                        $location.path('/');
+                    }
+
+                });
+            });
 
 
     function config($stateProvider, $urlRouterProvider) {
