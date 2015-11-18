@@ -36,11 +36,11 @@
         $scope.showEditRow = function(r) {
             if ($scope.active != r) {
                 $scope.active = r;
-                $scope.isFocused = true;
+                $scope.isFocused = r;
             }
             else {
                 $scope.active = null;
-                $scope.isFocused = false;
+                $scope.isFocused = null;
             }
         };
         $scope.saveEditTask = function(data) {
