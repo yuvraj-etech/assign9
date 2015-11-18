@@ -78,9 +78,9 @@
                 $scope.selection.push(taskId);
                 $scope.deleteSelected = function() {
                     var email = userObject.email;
-                    deleteSelectedTask.remove($scope.selection, email).then(function(response) {
+                    deleteSelectedTask.remove($scope.selection, email);
+                    ajaxRequest.send('allTask.php', {email: email}, 'POST').then(function(response) {
                         $scope.data = response;
-                        $scope.selection = [];
                     }, function(response) {
                         $log.error(response);
                     });

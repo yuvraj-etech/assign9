@@ -2,24 +2,12 @@
     'use strict';
     angular.module('userTaskModule')
             .factory('deleteSelectedTask', deleteSelectedTask);
-    function deleteSelectedTask($http, $q) {
+    function deleteSelectedTask(ajaxRequest) {
         return {
             remove: function(selectedIds, email) {
-                for (var i = 0; i <= selectedIds.length; i++) {
-                    var baseApi = 'server/';
-                    var def = $q.defer();
-                    $http({
-                        url: baseApi + "deleteTask.php",
-                        method: "POST",
-                        data: 'taskId='+selectedIds[i]+'&email='+email,
-                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                    }).success(function(data) {
-                        def.resolve(data);
-                    }).error(function() {
-                        def.reject('500');
-                    });
+                for (var i = 0; i < selectedIds.length; i++) {
+                    ajaxRequest.send('deleteTask.php', {taskId: selectedIds[i], email: email}, 'POST');
                 }
-                return def.promise;
             }
         };
     }
