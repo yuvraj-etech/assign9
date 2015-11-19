@@ -2,16 +2,27 @@
     'use strict';
     angular.module('userTaskModule')
             .factory('deleteSelectedTask', deleteSelectedTask);
-    function deleteSelectedTask(ajaxRequest) {
+    function deleteSelectedTask(ajaxRequest, $q) {
         return {
             remove: function(selectedId) {
-                function callback(id) {
-                    ajaxRequest.send('deleteTask.php', {taskId: id}, 'POST');
-                }
-                for (var i = 0; i < selectedId.length; i++) {
-                    callback(selectedId[i]);
-                }
+                var def = $q.defer();
+                var i = 0;
+                var count = selectedId.length;
+                callback(selectedId[0], i);
 
+                function callback(id, i) {
+                    ajaxRequest.send('deleteTask.php', {taskId: id}, 'POST').then(function() {
+                        i++;
+                        if (i < selectedId.length) {
+                            callback(selectedId[i], i);
+                        }
+                        if (count == i) {
+                            def.resolve();
+                        }
+
+                    });
+                }
+                return def.promise;
             }
         };
     }

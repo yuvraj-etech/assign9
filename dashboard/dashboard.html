@@ -26,7 +26,7 @@
                                     <tr class="success"><th>Select</th><th>Task Status</th><th>Task Name</th><th>Due Date</th><th>Edit Task</th><th>Delete Task</th></tr>
                                     <tr ng-repeat="x in data| filter:searchTask track by $index" ng-class="(x.task_status == 'No') ? 'red' : 'grey'">
                                         <td>
-                                            <input type="checkbox" ng-checked="selection.indexOf(x.id) > - 1" ng-click="selectedIds(x.id)" /> 
+                                            <input type="checkbox" ng-checked="selection.indexOf(x.id) > - 1" ng-click="selectedIds(x.id, $index)" /> 
                                         </td>
                                         <td>
                                             <input type="checkbox" ng-model="x.task_status" ng-true-value="'Yes'" ng-false-value="'No'" ng-change="saveEditTask(x)">

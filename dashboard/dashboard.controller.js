@@ -56,7 +56,7 @@
             });
         };
         $scope.addTask = function() {
-            $scope.data.push({task_status: 'No', task_name: $scope.taskName, due_date: $scope.dueDate});
+            $scope.data.unshift({task_status: 'No', task_name: $scope.taskName, due_date: $scope.dueDate});
             var email = userObject.email;
             ajaxRequest.send('addTask.php', {taskName: $scope.taskName, dueDate: $scope.dueDate, userEmail: email}, 'POST').then(function(response) {
                 ajaxRequest.send('allTask.php', {email: email}, 'POST').then(function(response) {
@@ -73,7 +73,7 @@
 
 
         $scope.selection = [];
-        $scope.selectedIds = function(taskId) {
+        $scope.selectedIds = function(taskId, index) {
             var idx = $scope.selection.indexOf(taskId);
             if (idx > -1) {
                 $scope.selection.splice(idx, 1);
@@ -81,13 +81,15 @@
             else {
                 $scope.selection.push(taskId);
                 $scope.deleteSelected = function() {
-                    deleteSelectedTask.remove($scope.selection);
-                    var email = userObject.email;
-                    ajaxRequest.send('allTask.php', {email: email}, 'POST').then(function(response) {
-                        $scope.data = response;
-                    }, function(response) {
-                        $log.error(response);
+                    deleteSelectedTask.remove($scope.selection).then(function() {
+                        var email = userObject.email;
+                        ajaxRequest.send('allTask.php', {email: email}, 'POST').then(function(response) {
+                            $scope.data = response;
+                        }, function(response) {
+                            $log.error(response);
+                        });
                     });
+
                 }
             }
         };
