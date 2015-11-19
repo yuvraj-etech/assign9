@@ -54,8 +54,13 @@
         };
         $scope.addTask = function() {
             var email = userObject.email;
-            $scope.data.unshift({task_status:'No', task_name: $scope.taskName, due_date: $scope.dueDate});
+            $scope.data.unshift({task_status: 'No', task_name: $scope.taskName, due_date: $scope.dueDate});
             ajaxRequest.send('addTask.php', {taskName: $scope.taskName, dueDate: $scope.dueDate, userEmail: email}, 'POST').then(function(response) {
+                ajaxRequest.send('allTask.php', {email: email}, 'POST').then(function(response) {
+                    $scope.data = response;
+                }, function(response) {
+                    $log.error(response);
+                });
                 $scope.taskName = "";
                 $scope.dueDate = "";
             }, function(response) {
@@ -73,13 +78,10 @@
             else {
                 $scope.selection.push(taskId);
                 $scope.deleteSelected = function() {
-                    var email = userObject.email;
-                    deleteSelectedTask.remove($scope.selection, email);
-                    ajaxRequest.send('allTask.php', {email: email}, 'POST').then(function(response) {
-                        $scope.data = response;
-                    }, function(response) {
-                        $log.error(response);
-                    });
+                    for (var i = 0; i < $scope.selection.length; i++) {
+                        $scope.data.shift($scope.selection[i]);
+                        deleteSelectedTask.remove($scope.selection[i], email);
+                    }
                 }
             }
         };
