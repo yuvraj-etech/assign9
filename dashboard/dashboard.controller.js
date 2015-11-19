@@ -21,14 +21,17 @@
                 $log.error(response);
             });
         }
+        $scope.show = false;
+        $scope.showLogout = function() {
+            $scope.show = !$scope.show;
+        };
 
         $scope.logout = function() {
             timeStorageService.remove('userLocalStorage');
         };
         $scope.deleteTask = function(data) {
             $scope.data.shift(data);
-            var email = userObject.email;
-            ajaxRequest.send('deleteTask.php', {taskId: data.id, email: email}, 'POST').then(function(response) {
+            ajaxRequest.send('deleteTask.php', {taskId: data.id}, 'POST').then(function(response) {
                 $log.info(response);
             }, function(response) {
                 $log.error(response);
@@ -53,8 +56,8 @@
             });
         };
         $scope.addTask = function() {
+            $scope.data.push({task_status: 'No', task_name: $scope.taskName, due_date: $scope.dueDate});
             var email = userObject.email;
-            $scope.data.unshift({task_status: 'No', task_name: $scope.taskName, due_date: $scope.dueDate});
             ajaxRequest.send('addTask.php', {taskName: $scope.taskName, dueDate: $scope.dueDate, userEmail: email}, 'POST').then(function(response) {
                 ajaxRequest.send('allTask.php', {email: email}, 'POST').then(function(response) {
                     $scope.data = response;
@@ -70,7 +73,7 @@
 
 
         $scope.selection = [];
-        $scope.selectedIds = function selectedIds(taskId) {
+        $scope.selectedIds = function(taskId) {
             var idx = $scope.selection.indexOf(taskId);
             if (idx > -1) {
                 $scope.selection.splice(idx, 1);
@@ -78,10 +81,13 @@
             else {
                 $scope.selection.push(taskId);
                 $scope.deleteSelected = function() {
-                    for (var i = 0; i < $scope.selection.length; i++) {
-                        $scope.data.shift($scope.selection[i]);
-                        deleteSelectedTask.remove($scope.selection[i], email);
-                    }
+                    deleteSelectedTask.remove($scope.selection);
+                    var email = userObject.email;
+                    ajaxRequest.send('allTask.php', {email: email}, 'POST').then(function(response) {
+                        $scope.data = response;
+                    }, function(response) {
+                        $log.error(response);
+                    });
                 }
             }
         };

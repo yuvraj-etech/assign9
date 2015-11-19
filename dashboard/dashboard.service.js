@@ -4,8 +4,14 @@
             .factory('deleteSelectedTask', deleteSelectedTask);
     function deleteSelectedTask(ajaxRequest) {
         return {
-            remove: function(selectedId, email) {
-                    ajaxRequest.send('deleteTask.php', {taskId: selectedId, email: email}, 'POST');
+            remove: function(selectedId) {
+                function callback(id) {
+                    ajaxRequest.send('deleteTask.php', {taskId: id}, 'POST');
+                }
+                for (var i = 0; i < selectedId.length; i++) {
+                    callback(selectedId[i]);
+                }
+
             }
         };
     }

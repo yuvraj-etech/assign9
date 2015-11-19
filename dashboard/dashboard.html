@@ -1,29 +1,5 @@
 <div class="panel panel-info">
     <div class="panel-heading"><h5>User Dashboard</h5></div>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <a class="navbar-brand" href="">
-                    <img alt="Brand" src="assets/images/logo.png" width="120" height="30">
-                </a>
-            </div>
-            <ul class="nav nav-tabs">
-                <li role="presentation" class="active"><a href="#/dashboard">Dashboard</a></li>
-                <li role="presentation"><a href="#">Profile</a></li>
-                <li role="presentation"><a href="#">Messages</a></li>
-                <li role="presentation" class="dropdown" ng-repeat="x in userData track by $index">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                        <span class="glyphicon glyphicon-user"> </span> {{x.name}} <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a ng-click="logout()" href="#/"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div><!-- /.container-fluid -->
-    </nav>
-
     <div class="panel-body">
         <div class="col-md-12">
             <div class="row">
@@ -48,7 +24,7 @@
                                     </colgroup>
                                     <input type="text" ng-model="searchTask" name="name" placeholder="Search for a task" class="form-control" autocomplete="off">
                                     <tr class="success"><th>Select</th><th>Task Status</th><th>Task Name</th><th>Due Date</th><th>Edit Task</th><th>Delete Task</th></tr>
-                                    <tr ng-repeat="x in data| filter:searchTask track by $index " ng-class="(x.task_status == 'No') ? 'red' : 'grey'">
+                                    <tr ng-repeat="x in data| filter:searchTask track by $index" ng-class="(x.task_status == 'No') ? 'red' : 'grey'">
                                         <td>
                                             <input type="checkbox" ng-checked="selection.indexOf(x.id) > - 1" ng-click="selectedIds(x.id)" /> 
                                         </td>
