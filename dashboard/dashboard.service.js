@@ -19,11 +19,11 @@
 
                         }
                         def.notify(index[num]);
-                        num++;
+                        
                         if (count == i) {
                             def.resolve();
                         }
-                        
+                        num++;
                     });
                 }
                 return def.promise;
