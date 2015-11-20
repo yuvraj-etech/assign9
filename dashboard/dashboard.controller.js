@@ -73,6 +73,7 @@
 
 
         $scope.selection = [];
+        $scope.index = [];
         $scope.selectedIds = function(taskId, index) {
             var idx = $scope.selection.indexOf(taskId);
             if (idx > -1) {
@@ -80,19 +81,19 @@
             }
             else {
                 $scope.selection.push(taskId);
+                $scope.index.push(index);
                 $scope.deleteSelected = function() {
-                    deleteSelectedTask.remove($scope.selection).then(function() {
-                        var email = userObject.email;
-                        ajaxRequest.send('allTask.php', {email: email}, 'POST').then(function(response) {
-                            $scope.data = response;
-                        }, function(response) {
-                            $log.error(response);
-                        });
-                    });
-
+                    deleteSelectedTask.remove($scope.selection, $scope.index).then(function() {
+                    },
+                            function() {
+                            },
+                            function(index) {
+                                $scope.data.splice(index, 1);
+                            });
                 }
-            }
-        };
+        }
+    }
+    ;
 
 
 
