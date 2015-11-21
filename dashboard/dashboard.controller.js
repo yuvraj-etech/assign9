@@ -91,11 +91,28 @@
                                 $scope.data.splice(index, 1);
                             });
                 }
+            }
         }
-    }
-    ;
+        ;
 
 
+        $scope.treeOptions = {
+            accept: function(sourceNodeScope, destNodesScope, destIndex) {
+                return true;
+            },
+            dropped: function(e) {
+                var droppedTask = e.source.nodeScope.$modelValue;
+                var droppedTaskId = droppedTask.id;
+                var NewDropOrderNo = e.dest.index;
+                //alert('Dropped Task id: ' + droppedTaskId + " new order No: " + NewDropOrderNo);
+                var email = userObject.email;
+                ajaxRequest.send('changeOrderNo.php', {taskId: droppedTaskId, newOrderNo: NewDropOrderNo, userEmail: email}, 'POST').then(function(response) {
+                    
+                }, function(response) {
+                    $log.error(response);
+                });
+            }
+        };
 
 
 

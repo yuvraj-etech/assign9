@@ -13,8 +13,8 @@
                             <div class="panel-heading">All Tasks</div>
                             <div class="panel-body">
                                 <button ng-click="deleteSelected()" class="btn btn-primary">Delete Selected</button>
-                                <div ui-tree ng-keydown="$event.which === 27 && showEditRow(x)">
-                                    <ol ui-tree-nodes="" ng-model="data">
+                                <div ui-tree="treeOptions" ng-keydown="$event.which === 27 && showEditRow(x)">
+                                    <ol ui-tree-nodes ng-model="data">
                                         <li ng-repeat="x in data" ui-tree-node>
                                             <div ui-tree-handle>
                                                 <div class="row" ng-class="(x.task_status == 'No') ? 'red' : 'grey'">
@@ -23,28 +23,79 @@
                                                     <div class="col-sm-2"><span ng-hide="active == x" ng-click="showEditRow(x)">{{x.task_name}}</span>
                                                         <input class="form-control input-sm" ng-show="active == x" ng-model="x.task_name" ng-keydown="$event.which === 13 && saveEditTask(x)" ng-focus="isFocused"></div>
                                                     <div class="col-sm-2"><span ng-hide="active == x" ng-click="showEditRow(x)">{{x.due_date}}</span>
-                                                        <datepicker date-format="yyyy-MM-dd" date-min-limit="2015-11-19">
-                                                            <input class="form-control input-sm" ng-show="active == x" ng-model="x.due_date" ng-keydown="$event.which === 13 && saveEditTask(x)" readonly="readonly">
-                                                        </datepicker></div>
-                                                    <div class="col-sm-2"><a href="" ng-click="showEditRow(x)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</a>
-                                                        <br/><a href="" ng-click="saveEditTask(x)" ng-show="active == x"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Save</a></div>
-                                                    <div class="col-sm-2"><a href="" ng-click="deleteTask(x)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</a></div>
-                                                </div>
-                                            </div>
 
-<!--                                            <ol ui-tree-nodes="" ng-model="x.items">
-                                                <li ng-repeat="subItem in x.items" ui-tree-node>
+                                                        <input class="form-control input-sm" ng-show="active == x" ng-model="x.due_date" ng-keydown="$event.which === 13 && saveEditTask(x)" readonly="readonly">
+                                                    </div>
+                                                    <div class="col-sm-2"><button ng-hide="active == x" ng-click="showEditRow(x)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
+                                                        <br/><button ng-click="saveEditTask(x)" ng-show="active == x"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Save</button></div>
+                                                    <div class="col-sm-2"><button ng-click="deleteTask(x)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</button></div>
+                                                </div>
+
+                                            </div>
+                                            <ol ui-tree-nodes="" ng-model="x.nodes">
+                                                <li ng-repeat="subItem in x.nodes" ui-tree-node>
                                                     <div ui-tree-handle>
-                                                        {{subItem}}
+                                                        <div class="row" ng-class="(subItem.task_status == 'No') ? 'red' : 'grey'">
+                                                            <div class="col-sm-2"><input type="checkbox" ng-checked="selection.indexOf(subItem.id) > -1" ng-click="selectedIds(subItem.id, $index)" /></div>
+                                                            <div class="col-sm-2"><input type="checkbox" ng-model="subItem.task_status" ng-true-value="'Yes'" ng-false-value="'No'" ng-change="saveEditTask(subItem)"></div>
+                                                            <div class="col-sm-2"><span ng-hide="active == subItem" ng-click="showEditRow(subItem)">{{subItem.task_name}}</span>
+                                                                <input class="form-control input-sm" ng-show="active == subItem" ng-model="subItem.task_name" ng-keydown="$event.which === 13 && saveEditTask(subItem)" ng-focus="isFocused"></div>
+                                                            <div class="col-sm-2"><span ng-hide="active == subItem" ng-click="showEditRow(subItem)">{{subItem.due_date}}</span>
+
+                                                                <input class="form-control input-sm" ng-show="active == subItem" ng-model="subItem.due_date" ng-keydown="$event.which === 13 && saveEditTask(subItem)" readonly="readonly">
+                                                            </div>
+                                                            <div class="col-sm-2"><button ng-hide="active == subItem" ng-click="showEditRow(subItem)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
+                                                                <br/><button ng-click="saveEditTask(subItem)" ng-show="active == subItem"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Save</button></div>
+                                                            <div class="col-sm-2"><button ng-click="deleteTask(subItem)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</button></div>
+                                                        </div>
+
+                                                        <ol ui-tree-nodes="" ng-model="subItem.nodes">
+                                                            <li ng-repeat="subsubItem in subItem.nodes" ui-tree-node>
+                                                                <div ui-tree-handle>
+                                                                    <div class="row" ng-class="(subsubItem.task_status == 'No') ? 'red' : 'grey'">
+                                                                        <div class="col-sm-2"><input type="checkbox" ng-checked="selection.indexOf(subsubItem.id) > -1" ng-click="selectedIds(subsubItem.id, $index)" /></div>
+                                                                        <div class="col-sm-2"><input type="checkbox" ng-model="subsubItem.task_status" ng-true-value="'Yes'" ng-false-value="'No'" ng-change="saveEditTask(subsubItem)"></div>
+                                                                        <div class="col-sm-2"><span ng-hide="active == subsubItem" ng-click="showEditRow(subsubItem)">{{subsubItem.task_name}}</span>
+                                                                            <input class="form-control input-sm" ng-show="active == subsubItem" ng-model="subsubItem.task_name" ng-keydown="$event.which === 13 && saveEditTask(subsubItem)" ng-focus="isFocused"></div>
+                                                                        <div class="col-sm-2"><span ng-hide="active == subsubItem" ng-click="showEditRow(subsubItem)">{{subsubItem.due_date}}</span>
+
+                                                                            <input class="form-control input-sm" ng-show="active == subsubItem" ng-model="subsubItem.due_date" ng-keydown="$event.which === 13 && saveEditTask(subsubItem)" readonly="readonly">
+                                                                        </div>
+                                                                        <div class="col-sm-2"><button ng-hide="active == subsubItem" ng-click="showEditRow(subsubItem)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
+                                                                            <br/><button ng-click="saveEditTask(subsubItem)" ng-show="active == subsubItem"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Save</button></div>
+                                                                        <div class="col-sm-2"><button ng-click="deleteTask(subsubItem)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</button></div>
+                                                                    </div>
+
+                                                                    <ol ui-tree-nodes="" ng-model="subsubItem.nodes">
+                                                                        <li ng-repeat="subsubsubItem in subsubItem.nodes" ui-tree-node>
+                                                                            <div ui-tree-handle>
+                                                                                <div class="row" ng-class="(subsubsubItem.task_status == 'No') ? 'red' : 'grey'">
+                                                                                    <div class="col-sm-2"><input type="checkbox" ng-checked="selection.indexOf(subsubsubItem.id) > -1" ng-click="selectedIds(subsubsubItem.id, $index)" /></div>
+                                                                                    <div class="col-sm-2"><input type="checkbox" ng-model="subsubsubItem.task_status" ng-true-value="'Yes'" ng-false-value="'No'" ng-change="saveEditTask(subsubsubItem)"></div>
+                                                                                    <div class="col-sm-2"><span ng-hide="active == subsubsubItem" ng-click="showEditRow(subsubsubItem)">{{subsubsubItem.task_name}}</span>
+                                                                                        <input class="form-control input-sm" ng-show="active == subsubsubItem" ng-model="subsubsubItem.task_name" ng-keydown="$event.which === 13 && saveEditTask(subsubsubItem)" ng-focus="isFocused"></div>
+                                                                                    <div class="col-sm-2"><span ng-hide="active == subsubsubItem" ng-click="showEditRow(subsubsubItem)">{{subsubsubItem.due_date}}</span>
+
+                                                                                        <input class="form-control input-sm" ng-show="active == subsubsubItem" ng-model="subsubsubItem.due_date" ng-keydown="$event.which === 13 && saveEditTask(subsubsubItem)" readonly="readonly">
+                                                                                    </div>
+                                                                                    <div class="col-sm-2"><button ng-hide="active == subsubsubItem" ng-click="showEditRow(subsubsubItem)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit</button>
+                                                                                        <br/><button ng-click="saveEditTask(subsubsubItem)" ng-show="active == subsubsubItem"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Save</button></div>
+                                                                                    <div class="col-sm-2"><button ng-click="deleteTask(subsubsubItem)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Delete</button></div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </li>
+                                                                    </ol>
+
+                                                                </div>
+                                                            </li>
+                                                        </ol>
+
                                                     </div>
                                                 </li>
-                                            </ol>-->
+                                            </ol>
                                         </li>
                                     </ol>
                                 </div>
-
-
-
 
 
 
