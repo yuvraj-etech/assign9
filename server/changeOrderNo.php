@@ -14,7 +14,7 @@ echo $numRows;
 $newOrderNo = 0;
 
 if ($newOrderNo == 0) {
-    for($i=1;$i<=2;$i++)
+    for($i=1;$i<=$numRows;$i++)
   {
      $arr[$i] = $i;
   }

@@ -59,11 +59,11 @@
             $scope.data.unshift({task_status: 'No', task_name: $scope.taskName, due_date: $scope.dueDate});
             var email = userObject.email;
             ajaxRequest.send('addTask.php', {taskName: $scope.taskName, dueDate: $scope.dueDate, userEmail: email}, 'POST').then(function(response) {
-                ajaxRequest.send('allTask.php', {email: email}, 'POST').then(function(response) {
-                    $scope.data = response;
-                }, function(response) {
-                    $log.error(response);
-                });
+//                ajaxRequest.send('allTask.php', {email: email}, 'POST').then(function(response) {
+//                    $scope.data = response;
+//                }, function(response) {
+//                    $log.error(response);
+//                });
                 $scope.taskName = "";
                 $scope.dueDate = "";
             }, function(response) {
@@ -104,13 +104,16 @@
                 var droppedTask = e.source.nodeScope.$modelValue;
                 var droppedTaskId = droppedTask.id;
                 var NewDropOrderNo = e.dest.index;
+                var json = JSON.stringify(e.source.nodeScope.$parent.$modelValue);
+                //alert(JSON.stringify(e.pos));
+                
                 //alert('Dropped Task id: ' + droppedTaskId + " new order No: " + NewDropOrderNo);
-                var email = userObject.email;
-                ajaxRequest.send('changeOrderNo.php', {taskId: droppedTaskId, newOrderNo: NewDropOrderNo, userEmail: email}, 'POST').then(function(response) {
-                    
-                }, function(response) {
-                    $log.error(response);
-                });
+//                var email = userObject.email;
+//                ajaxRequest.send('changeOrderNo.php', {taskId: droppedTaskId, newOrderNo: NewDropOrderNo, userEmail: email}, 'POST').then(function(response) {
+//                    
+//                }, function(response) {
+//                    $log.error(response);
+//                });
             }
         };
 
